@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { TwitterShareButton, FacebookShareButton, WhatsappShareButton } from "react-share";
 import { TwitterIcon, FacebookIcon, WhatsappIcon } from "react-share";
+import { Copy } from "react-feather";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { motion } from "framer-motion";
 import axios from "axios";
+
 
 export const ValentineProposalCard = () => {
   const [name, setName] = useState("");
@@ -20,6 +22,16 @@ const check=async (link)=>{
   console.log("Microlink API Response:", response.data,response.data.data.screenshot.url);
   setScreenShot(response.data.data.screenshot.url)
 }
+const [copied, setCopied] = useState(false);
+
+const handleCopy = () => {
+  navigator.clipboard.writeText(link)
+    .then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); 
+    })
+    .catch(err => console.error("Error copying link:", err));
+};
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -98,7 +110,6 @@ const check=async (link)=>{
           style={{ zIndex: 20,  width: "60%",
             maxWidth: "100svw", }}
         >
-          
          
           <div className="position-relative p-3 bg-dark border border-3 border-secondary rounded">
       
@@ -112,7 +123,14 @@ const check=async (link)=>{
           </div>
 
       
-          <div className="d-flex justify-content-center mt-3 gap-2">
+          <div className="d-flex justify-content-center mt-3 gap-3">
+          <div className="d-flex  justify-content-center align-items-center pointer" style={{border: "1px solid black",
+   borderRadius: "50%",
+    padding: "8px",
+    cursor:"pointer"
+    }} onClick={handleCopy}>
+        <Copy size={18}  /> 
+      </div>
             <WhatsappShareButton url={link}>
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>
@@ -139,3 +157,4 @@ const check=async (link)=>{
         
   );
 };
+
