@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDrag, useDrop, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { motion } from "framer-motion";
+import { Copy } from "react-feather";
+
+import { TwitterShareButton, FacebookShareButton, WhatsappShareButton } from "react-share";
+import { TwitterIcon, FacebookIcon, WhatsappIcon } from "react-share";
+
+
 import axios from "axios";
 import "./Puzzle.css";
 
@@ -43,6 +50,9 @@ const ValentineMakePuzzle = () => {
   const [timer, setTimer] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [link,setLink]=useState(null);
+  const [screenShot,setScreenShot]=useState(null);
+  
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -142,13 +152,34 @@ const ValentineMakePuzzle = () => {
       setIsCompleted(true);
     }
   };
+  const handleCopy = () => {
+    navigator.clipboard.writeText(link)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); 
+      })
+      .catch(err => console.error("Error copying link:", err));
+  };
+
+  const check=async (link)=>{
+
+    const apiUrl = `https://api.microlink.io/?url=${encodeURIComponent(link)}&screenshot=true`;
+  
+    const response = await axios.get(apiUrl);
+  
+    console.log("Microlink API Response:", response.data,response.data.data.screenshot.url);
+    setScreenShot(response.data.data.screenshot.url)
+  }
 
   const sharePuzzle = () => {
     if (!image) return;
     const shareableURL = `${window.location.origin}${
       window.location.pathname
     }?puzzleImage=${encodeURIComponent(uniqueId)}`;
+    
     navigator.clipboard.writeText(shareableURL);
+    check(shareableURL)
+    setLink(shareableURL)
     alert("Puzzle link copied! Share it with your partner.");
   };
 
@@ -200,6 +231,62 @@ const ValentineMakePuzzle = () => {
                   Share Puzzle
                 </button>
               )}
+               {link && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
+          style={{ backdropFilter: "blur(8px)", zIndex: 10 }}
+        ></div>
+      )}
+      {link && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0, y: "-100vh" }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0, opacity: 0, y: "-100vh" }}
+          transition={{ type: "spring", stiffness: 100, damping: 15 }}
+          className="position-fixed top-50 start-50 translate-middle bg-white p-3 rounded shadow-lg border border-dark"
+          style={{ zIndex: 20,  width: "60%",
+            maxWidth: "100svw", }}
+        >
+         
+          <div className="position-relative p-3 bg-dark border border-3 border-secondary rounded">
+      
+            <div className="position-absolute top-0 start-50 translate-middle-x bg-secondary w-25 rounded-pill" style={{ height: "5px" }}></div>
+            <img
+              src={screenShot}
+              alt="Website preview"
+              className="img-fluid border border-2 border-white"
+            />
+            <div className="position-absolute bottom-0 start-50 translate-middle-x bg-secondary w-25 rounded-pill" style={{ height: "5px" }}></div>
+          </div>
+
+      
+          <div className="d-flex justify-content-center mt-3 gap-3">
+          <div className="d-flex  justify-content-center align-items-center pointer" style={{border: "1px solid black",
+   borderRadius: "50%",
+    padding: "8px",
+    cursor:"pointer"
+    }} onClick={handleCopy}>
+        <Copy size={18}  /> 
+      </div>
+            <WhatsappShareButton url={link}>
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
+            <FacebookShareButton url={link}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton url={link}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+          </div>
+
+        
+          <div className="text-center mt-3">
+            <button className="btn btn-outline-secondary btn-sm mt-2" onClick={() => setLink(null)}>
+              Close
+            </button>
+          </div>
+        </motion.div>
+      )}
 
               {/* Completion Message with Animation */}
               {isCompleted && (
