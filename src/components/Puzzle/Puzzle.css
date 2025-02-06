@@ -1,0 +1,49 @@
+
+#root {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  width: 100svw;
+}
+.mybox {
+  width: 60%;
+  background-color: white !important;
+  border-radius: 16px;
+  padding: 70px;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+.mybox > button {
+  background-color: #d63d70;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: white;
+}
+.myline {
+  font-family: "Great Vibes", serif;
+}
+
+.rightImg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  z-index: -1;
+}
+.leftImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: -2;
+}
+
+@media screen and (max-width:800px){
+  .mybox{
+    width: 90%;
+    padding: 50px;
+  }
+}

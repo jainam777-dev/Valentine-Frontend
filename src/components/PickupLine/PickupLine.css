@@ -1,0 +1,51 @@
+
+.mybox{
+    width: 60% ;
+    background-color: white;
+    border-radius: 16px;
+    padding: 70px ;
+  }
+  button{
+    border:none;
+    background-color: transparent;
+  }
+  .mybox>button{    
+    background-color:#D63D70 ;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+  }
+  .myline{
+    font-family: "Great Vibes", serif; 
+  }
+  .rightImg{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: -1;
+  }
+  .leftImg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    height: 100vh;
+    z-index: -2;
+  }
+  .companyButton{
+    background-color: #FFDE21 !important;
+    padding: 0px !important;
+    overflow: hidden;
+    transform: translateY(-2px);
+  }
+  .companyButton>img{
+    height: 40px;
+    padding: 6px;
+  }
+  @media screen and (max-width:800px){
+    .mybox{
+      width: 90%;
+      padding: 50px;
+    }
+  }
