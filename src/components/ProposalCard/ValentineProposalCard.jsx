@@ -17,8 +17,8 @@ const check=async (link)=>{
 
   const response = await axios.get(apiUrl);
 
-  console.log("Microlink API Response:", response.data);
-  setScreenShot(response.data.screenshot.url)
+  console.log("Microlink API Response:", response.data,response.data.data.screenshot.url);
+  setScreenShot(response.data.data.screenshot.url)
 }
 
   const handleFormSubmit = (e) => {
@@ -138,4 +138,3 @@ const check=async (link)=>{
         
   );
 };
-
