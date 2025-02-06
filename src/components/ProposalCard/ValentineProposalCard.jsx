@@ -25,7 +25,7 @@ const check=async (link)=>{
     e.preventDefault();
     const uniqueLink = `${
       window.location.origin
-    }/valentine-proposalCardShare?name=${encodeURIComponent(name)}&message=${encodeURIComponent(
+    }/proposalCardShare?name=${encodeURIComponent(name)}&message=${encodeURIComponent(
       message
     )}`;
     check(uniqueLink);
@@ -72,7 +72,7 @@ const check=async (link)=>{
                     <h3>Your personalized Valentine's link:</h3>
                     <p>
                       <Link
-                        to={`/valentine-proposalCardShare?name=${encodeURIComponent(
+                        to={`/proposalCardShare?name=${encodeURIComponent(
                           name
                         )}&message=${encodeURIComponent(message)}`}
                         target="_blank"
