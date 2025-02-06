@@ -198,12 +198,22 @@ const ValentineMakePuzzle = () => {
 
           {/* File Upload (Hidden for Shared Puzzles) */}
           {!isShared && (
+      <>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
               className="form-control mt-3"
             />
+          <button
+                    className="companyButton companystart2"
+                    onClick={() =>
+                      window.open("http://www.avinyakriti.in", "_blank")
+                    }
+                  >
+                    <img src="/company.png" alt="Company Logo" />
+                  </button>
+      </>
           )}
 
           {image && (
