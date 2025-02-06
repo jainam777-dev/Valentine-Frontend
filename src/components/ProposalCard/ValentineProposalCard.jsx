@@ -98,6 +98,7 @@ const check=async (link)=>{
           style={{ zIndex: 20,  width: "60%",
             maxWidth: "100svw", }}
         >
+          {link}
          
           <div className="position-relative p-3 bg-dark border border-3 border-secondary rounded">
       
